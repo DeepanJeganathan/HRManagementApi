@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using HrManagementApi.DTOs.EmployeeDTOs;
 using HrMangementApi.DTOs.EmployeeDTOs;
 using HrMangementApi.Models;
 using HrMangementApi.Services;
@@ -62,21 +63,76 @@ namespace HrMangementApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Employee>> create([FromBody]EmployeeCreateDTO employeeCreateDTO)
+        public async Task<ActionResult<Employee>> Create([FromBody]EmployeeCreateDTO employeeCreateDTO)
         {
-            if (employeeCreateDTO==null)
+            if (employeeCreateDTO == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (_employeeRepository.EmployeeExists(employeeCreateDTO.EmployeeNumber))
+            if (await _employeeRepository.EmployeeExists(employeeCreateDTO.EmployeeNumber))
             {
                 ModelState.AddModelError("", "Employee already exists!");
                 return StatusCode(404, ModelState);
             }
 
+            var employee = _mapper.Map<Employee>(employeeCreateDTO);
+
+            if (!await _employeeRepository.CreateAsync(employee))
+            {
+                ModelState.AddModelError("", "Error encountered when saving to database, try again. If problem persists contact your administrator");
+                return StatusCode(500, ModelState);
+            };
+
+            return CreatedAtAction(nameof(Employee), new { Id = employee.EmployeeNumber }, employee);
+
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Employee>> Update(int id, [FromBody] EmployeeUpdateDTO employeeUpdateDTO)
+        {
+            if (id != employeeUpdateDTO.EmployeeNumber || employeeUpdateDTO == null)
+            {
+
+                return BadRequest();
+            }
+
+            var employee = _mapper.Map<Employee>(employeeUpdateDTO);
+
+            if (!await _employeeRepository.UpdateAsync(employee))
+            {
+                ModelState.AddModelError("", "Error encountered when saving to database, try again. If problem persists contact your administrator");
+                return StatusCode(500, ModelState);
+
+            }
+
+            return NoContent();
+        }
+
+
+        [HttpDelete("{id}")]
+
+        public async Task<ActionResult<Employee>> Delete(int id)
+        {
+            
+            if (!await _employeeRepository.EmployeeExists(id))
+            {
+                ModelState.AddModelError("", "Employee does not exist!");
+                return StatusCode(404, ModelState);
+            }
+
+            var employee = await _employeeRepository.GetById(id);
+
+            if (!await _employeeRepository.DeleteAsync(employee)) 
+            {
+
+                ModelState.AddModelError("", "Error encountered when deleting from database, try again. If problem persists contact your administrator");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+
+        }
 
     }
 }

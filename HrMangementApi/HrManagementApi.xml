@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HrManagementApi</name>
+    </assembly>
+    <members>
+        <member name="M:HrMangementApi.Controllers.CommentsController.Comments">
+            <summary>
+            Get list of comments
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HrMangementApi.Controllers.CommentsController.Comment(System.Int32)">
+            <summary>
+            Get individual comment
+            </summary>
+            <param name="id">The id of comment</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

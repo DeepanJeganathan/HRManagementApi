@@ -27,6 +27,7 @@ namespace HrMangementApi.Models
         [MinLength(5, ErrorMessage = "Please enter a message longer than 5 characters")]
         public string Title { get; set; }
 
+         [ForeignKey("EmployeeNumber")]
         [Required]
         public int EmployeeNumber { get; set; }
 
@@ -44,7 +45,7 @@ namespace HrMangementApi.Models
         [Required]
         public Category Category { get; set; }
 
-        [ForeignKey("EmployeeNumber")]
+       
         public Employee Employee { get; set; }
     }
 }

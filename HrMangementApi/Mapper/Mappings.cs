@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using HrManagementApi.DTOs.CommentDTOs;
+using HrManagementApi.DTOs.EmployeeDTOs;
 using HrMangementApi.DTOs.EmployeeDTOs;
 using HrMangementApi.Models;
 using System;
@@ -14,7 +16,13 @@ namespace HrMangementApi.Mapper
         {
             CreateMap<Employee, EmployeeViewDTO>();
             CreateMap<Employee, EmployeeViewIdDTO>();
+            CreateMap<EmployeeCreateDTO, Employee>();
+            CreateMap<EmployeeUpdateDTO, Employee>();
 
+            CreateMap<Comment, CommentViewDTO>();
+            CreateMap<Comment, CommentViewIdDTO>();
+            CreateMap<CommentCreateDTO, Comment>();
+            CreateMap<CommentUpdateDTO, Comment>();
 
         }
 

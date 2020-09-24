@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AutoMapper;
 using HrMangementApi.Mapper;
+using System.Reflection;
+using System.IO;
 
 namespace HrMangementApi
 {
@@ -34,8 +36,21 @@ namespace HrMangementApi
             services.AddDbContext<DataContext>(options=> options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
 
           services.AddAutoMapper(typeof(Mappings));
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("HrManagementOpenAPIspec", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Hr Management API",
+                    Version = "1"
+                });
+
+                var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
+                options.IncludeXmlComments(cmlCommentsFullPath);
+            });
 
 
 
@@ -54,6 +69,12 @@ namespace HrMangementApi
             }
 
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/HrManagementOpenAPIspec/swagger.json", "Hr Management API");
+                options.RoutePrefix = "";
+            });
             app.UseMvc();
         }
     }

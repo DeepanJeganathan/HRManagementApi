@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\14168\\Desktop\\HrMangementApi\\HrMangementApi\\HrManagementApi.csproj": {}
+    "D:\\api\\HrManagementApi\\HrMangementApi\\HrManagementApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\14168\\Desktop\\HrMangementApi\\HrMangementApi\\HrManagementApi.csproj": {
+    "D:\\api\\HrManagementApi\\HrMangementApi\\HrManagementApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\14168\\Desktop\\HrMangementApi\\HrMangementApi\\HrManagementApi.csproj",
+        "projectUniqueName": "D:\\api\\HrManagementApi\\HrMangementApi\\HrManagementApi.csproj",
         "projectName": "HrManagementApi",
-        "projectPath": "C:\\Users\\14168\\Desktop\\HrMangementApi\\HrMangementApi\\HrManagementApi.csproj",
+        "projectPath": "D:\\api\\HrManagementApi\\HrMangementApi\\HrManagementApi.csproj",
         "packagesPath": "C:\\Users\\14168\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\14168\\Desktop\\HrMangementApi\\HrMangementApi\\obj\\",
+        "outputPath": "D:\\api\\HrManagementApi\\HrMangementApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -79,6 +79,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.1.10, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.6.2, )"
             }
           },
           "imports": [

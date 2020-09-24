@@ -17,19 +17,23 @@ namespace HrMangementApi.Data
             this._context = context;
         }
 
-        public Task<Employee> CreateAsync()
+        public async Task<bool> CreateAsync(Employee employee)
         {
-            throw new NotImplementedException();
+            await _context.Employees.AddAsync(employee);
+            
+            return await save();
         }
 
-        public Task<Employee> DeleteAsync()
+        public async Task<bool> DeleteAsync(Employee employee)
         {
-            throw new NotImplementedException();
+            _context.Employees.Remove(employee);
+            return await save();
+          
         }
 
-        public bool EmployeeExists(int EmployeeNumber)
+        public async Task<bool> EmployeeExists(int EmployeeNumber)
         {
-           return _context.Employees.Where(x => x.EmployeeNumber == EmployeeNumber).Any();
+           return await _context.Employees.Where(x => x.EmployeeNumber == EmployeeNumber).AnyAsync();
         }
 
         public async Task<IEnumerable<Employee>> GetAllAsync()
@@ -42,9 +46,15 @@ namespace HrMangementApi.Data
             return await _context.Employees.Where(x => x.EmployeeNumber==id).FirstOrDefaultAsync();
         }
 
-        public Task<Employee> UpdateAsync()
+        public async Task<bool>   save()
         {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync() >= 0 ? true : false;
+        }
+
+        public async Task<bool> UpdateAsync(Employee employee)
+        {
+            _context.Employees.Update(employee);
+              return await save();
         }
     }
 }

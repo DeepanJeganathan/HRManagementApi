@@ -12,13 +12,14 @@ namespace HrMangementApi.Services
 
         Task<Employee> GetById(int id);
 
-        Task<Employee> CreateAsync();
+        Task<bool> CreateAsync(Employee employee);
 
-        Task<Employee> UpdateAsync();
+        Task<bool> UpdateAsync(Employee employee);
 
-        Task<Employee> DeleteAsync();
+        Task<bool> DeleteAsync(Employee employee);
 
-        bool EmployeeExists(int EmployeeNumber);
+        Task<bool> EmployeeExists(int EmployeeNumber);
 
+        Task<bool> save();
     }
 }
